@@ -1,0 +1,30 @@
+# Joomla cache
+/cache/
+*/cache/
+
+# Logs and tmp
+/logs/
+/tmp/
+
+# Configuration files (local settings, not for GitHub)
+/configuration.php
+
+# Environment files
+.env
+
+# Backup files
+*.bak
+*.zip
+*.tar.gz
+
+# IDE & OS specific
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Composer vendor (if using Composer)
+/vendor/
+
+# Node modules (if using frontend build tools)
+/node_modules/
