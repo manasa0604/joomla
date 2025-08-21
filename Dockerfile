@@ -1,20 +1,24 @@
-# Dockerfile
+# Base image
 FROM php:8.1-apache
 
-# PHP extensions needed by Joomla
+# Install required PHP extensions for Joomla
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Harden Apache a bit
-RUN a2enmod rewrite && \
-    sed -ri 's!/var/www/html!/var/www/html!g' /etc/apache2/sites-available/000-default.conf
+# Enable Apache modules
+RUN a2enmod rewrite
 
-# Copy Joomla into document root
+# Copy Joomla source code into the Apache document root
 COPY . /var/www/html/
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
+# Fix permissions for Joomla
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
 
+# Expose Apache HTTP port
 EXPOSE 80
 
-# Optional healthcheck
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/ || exit 1
+# Healthcheck to ensure Apache + Joomla is running
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost/ || exit 1
+
+# Start Apache (default from php:apache base)
