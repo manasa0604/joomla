@@ -3,8 +3,8 @@ version: 0.2
 
 env:
   variables:
-    AWS_REGION: us-east-1
-    REPOSITORY_URI: 619322354073.dkr.ecr.us-east-1.amazonaws.com/demo-rg
+    AWS_REGION: ap-south-1
+    REPOSITORY_URI: 619322354073.dkr.ecr.ap-south-1.amazonaws.com/joomla
 phases:
   pre_build:
     commands:
@@ -21,7 +21,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $REPOSITORY_URI:latest
       - echo Creating imagedefinitions.json...
-      - printf '[{"name":"demo-rg","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
+      - printf '[{"name":"joomla","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
 
 artifacts:
   files:
